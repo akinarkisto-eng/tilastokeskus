@@ -37,13 +37,13 @@ Säilytä faktat ja ydin. Kirjoita suomeksi.
 
   const data = await openaiRes.json();
 
+  // UUSI RESPONSES-API: poimitaan teksti oikeasta kohdasta
+  const outputText =
+    data.output?.[0]?.content?.[0]?.text?.trim() ||
+    "Ei saatu vastausta.";
+
   return new Response(
-    JSON.stringify({
-      text:
-        data.output_text ||
-        data.choices?.[0]?.message?.content?.trim() ||
-        "Ei saatu vastausta."
-    }),
+    JSON.stringify({ text: outputText }),
     { headers: { "Content-Type": "application/json" } }
   );
 }
